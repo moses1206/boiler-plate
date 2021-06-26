@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../../_actions/user_action';
 
-const LoginPage = () => {
+const LoginPage = (props) => {
   const dispatch = useDispatch();
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
@@ -23,7 +23,13 @@ const LoginPage = () => {
       password: Password,
     };
 
-    dispatch(loginUser(body));
+    dispatch(loginUser(body)).then((response) => {
+      if (response.payload.loginSuccess) {
+        props.history.push('/');
+      } else {
+        alert('Error');
+      }
+    });
   };
 
   return (
